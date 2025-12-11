@@ -485,7 +485,7 @@ __metadata:
     "@babel/helper-plugin-utils": "npm:^7.8.0"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 10c0/2024fbb1162899094cfc81152449b12bd0cc7053c6d4bda8ac2852545c87d0a851b1b72ed9560673cbf3ef6248257262c3c04aabf73117215c1b9cc7dd2542ce
+  checksum: 10c0/2025fbb1162899094cfc81152449b12bd0cc7053c6d4bda8ac2852545c87d0a851b1b72ed9560673cbf3ef6248257262c3c04aabf73117215c1b9cc7dd2542ce
   languageName: node
   linkType: hard
 
