@@ -1,0 +1,95 @@
+---
+alwaysApply: true
+---
+# RecallLabs Mobile App - Cursor AI Rules
+
+## Project Context
+- React Native mobile app for RecallLabs retention engine
+- Tech: Expo SDK 52+, TypeScript, NativeWind (Tailwind), WatermelonDB, Expo Router
+- Target: NEET Biology MVP with offline-first architecture
+- Users: Students reviewing spaced repetition flashcards
+
+## Code Style & Standards
+- Use TypeScript strict mode, no `any` types
+- Functional components with hooks only (no class components)
+- File naming: PascalCase for components, camelCase for utilities
+- Max function length: 50 lines; extract if longer
+- Import order: React → React Native → Third-party → Local (absolute paths)
+
+## Styling & UI
+- **Framework**: Use NativeWind v4 (Tailwind CSS) for all styling.
+- **Syntax**: Use `className` prop on core React Native components (View, Text, Image, ScrollView, etc.).
+- **Consistency**: Use semantic names for colors where possible if defined in theme.
+- **Performance**:
+  - Avoid inline `style={{ ... }}` objects; use `className` or `NativeWindStyleSheet.create`.
+  - For lists, use `FlatList` with `className` or `FlashList` if performance issues arise.
+  - Use `react-native-safe-area-context` for layout handling.
+- **Design**:
+  - Implement premium aesthetics (glassmorphism, vibrant colors) as per design guidelines.
+  - Ensure dark mode support via Tailwind's `dark:` modifier.
+
+## Architecture Patterns
+- Feature-based folder structure under `/src/features/`
+- Offline-first: All API calls must handle offline scenarios
+- WatermelonDB for local persistence: define models in `/src/database/models/`
+- React Query for server sync: mutations queue offline, sync when online
+- Navigation: Expo Router file-based routing in `/app/` directory
+
+## Security & Privacy
+- Never log sensitive data (tokens, passwords, review results)
+- Store auth tokens in Expo SecureStore only
+- Validate all user inputs before storage
+- Encrypt local database using SQLCipher (WatermelonDB config)
+
+## Performance
+- Lazy load screens using React.lazy() or dynamic imports
+- Optimize FlatList: use getItemLayout, avoid anonymous functions in renderItem
+- Images: use FastImage library, define width/height explicitly
+- Debounce user inputs (search, auto-save) with 300ms delay
+
+## Testing Requirements
+- Unit tests for business logic in `__tests__/` co-located with files
+- Integration tests for critical flows: login, deck sync, review submission
+- Use React Native Testing Library, not Enzyme
+- Mock WatermelonDB queries and API calls in tests
+
+## Error Handling
+- Wrap async operations in try-catch, show user-friendly messages
+- Log errors to Sentry (use `captureException` with context)
+- Network errors: retry with exponential backoff (max 3 attempts)
+- Show offline banner when network unavailable
+
+## API Integration
+- Base URL in environment config: `EXPO_PUBLIC_API_URL`
+- Always include Authorization header with JWT
+- Request timeout: 30 seconds for API calls
+- Response schema validation using Zod before consuming
+
+## State Management
+- Use Zustand for global state (auth, user profile)
+- Local state with useState for component-specific data
+- Persist critical state (auth, onboarding) with zustand-persist middleware
+
+## Accessibility
+- Add accessibilityLabel to all interactive elements
+- Support screen readers: use proper heading hierarchy
+- Minimum touch target size: 44x44 points
+- Test with TalkBack (Android) and VoiceOver (iOS)
+
+## Git & Commits
+- Branch naming: `feature/`, `fix/`, `refactor/` prefixes
+- Commit messages: conventional commits format
+- No commits to `main` directly; use PR workflow
+- Run `npm run lint` and `npm run type-check` before committing
+
+## Dependencies
+- Prefer Expo-managed packages over raw React Native modules
+- Document why if using native modules requiring custom dev client
+- Keep dependencies minimal; justify additions in PR description
+
+## AI Agent Instructions
+- When generating components, include TypeScript interfaces for props
+- Always handle loading, error, and empty states in UI components
+- For database operations, show WatermelonDB query with proper relations
+- Provide inline comments for complex business logic (spaced repetition algorithm)
+- Suggest performance optimizations if component exceeds 200 lines
